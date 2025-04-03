@@ -1,4 +1,5 @@
 ﻿using IO.Swagger.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
@@ -9,7 +10,12 @@ namespace MathTaskApi.Controllers
     [ApiController]
     [Route("[controller]")]
     public class MathTaskController : Controller
-        { 
+    {
+        public readonly IMathService _mathService;
+        public MathTaskController(IMathService mathService)
+        {
+            _mathService = mathService;  
+        }
         /// <summary>
         /// Perform a math operation on two numbers
         /// </summary>
@@ -31,23 +37,8 @@ namespace MathTaskApi.Controllers
             decimal result;
 
 
-            try
-            {
-                result = xOperation.ToLower() switch
-                {
-                    "add" => body.Number1.Value + body.Number2.Value,
-                    "subtract" => body.Number1.Value - body.Number2.Value,
-                    "multiply" => body.Number1.Value * body.Number2.Value,
-                    "divide" => body.Number2.Value != 0
-                        ? body.Number1.Value / body.Number2.Value
-                        : throw new ArgumentException("Cannot divide by zero"),
-                    _ => throw new ArgumentException("Unsupported operation")
-                };
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { error = ex.Message });
-            }
+            result = _mathService.Calculate(body.Number1.Value, body.Number2.Value, xOperation);
+           
 
             return Ok(new { result });
         }

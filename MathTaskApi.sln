@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35919.96 d17.13
+VisualStudioVersion = 17.13.35919.96
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathTaskApi", "MathTaskApi\MathTaskApi.csproj", "{1B7C71E9-E03C-45ED-845A-C7BF8D6F05D5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathTaskApi.Test", "MathTaskApi.Test\MathTaskApi.Test.csproj", "{687D99E4-52B5-4426-8E77-ED08D36050A0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{1B7C71E9-E03C-45ED-845A-C7BF8D6F05D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B7C71E9-E03C-45ED-845A-C7BF8D6F05D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1B7C71E9-E03C-45ED-845A-C7BF8D6F05D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{687D99E4-52B5-4426-8E77-ED08D36050A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{687D99E4-52B5-4426-8E77-ED08D36050A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{687D99E4-52B5-4426-8E77-ED08D36050A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{687D99E4-52B5-4426-8E77-ED08D36050A0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
