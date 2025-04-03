@@ -1,16 +1,20 @@
-﻿public class MathService : IMathService
+﻿using MathTaskApi.Models;
+
+namespace MathTaskApi.Service
 {
-    public decimal Calculate(decimal number1, decimal number2, string operation)
+    public class MathService : IMathService
     {
-        return operation.ToLower() switch
+        public decimal Calculate(decimal number1, decimal number2, MathOperation operation)
         {
-            "add" => number1 + number2,
-            "subtract" => number1 - number2,
-            "multiply" => number1 * number2,
-            "divide" => number2 != 0
-                ? number1 / number2
-                : throw new ArgumentException("Cannot divide by zero"),
-            _ => throw new ArgumentException("Unsupported operation")
-        };
+            return operation switch
+            {
+                MathOperation.Add => number1 + number2,
+                MathOperation.Subtract => number1 - number2,
+                MathOperation.Multiply => number1 * number2,
+                MathOperation.Divide => number2 != 0 ? number1 / number2 : throw new ArgumentException("Cannot divide by zero"),
+                _ => throw new ArgumentOutOfRangeException(nameof(operation), "Unsupported operation")
+            };
+        }
     }
 }
+

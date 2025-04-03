@@ -1,4 +1,8 @@
-﻿public interface IMathService
+﻿using MathTaskApi.Models;
+namespace MathTaskApi.Service
 {
-    decimal Calculate(decimal number1, decimal number2, string operation);
+    public interface IMathService
+    {
+        decimal Calculate(decimal number1, decimal number2, MathOperation operation);
+    }
 }

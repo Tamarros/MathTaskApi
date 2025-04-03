@@ -1,6 +1,9 @@
 ﻿using IO.Swagger.Models;
+using MathTaskApi.Models;
+using MathTaskApi.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 
@@ -33,14 +36,15 @@ namespace MathTaskApi.Controllers
             {
                 return BadRequest("Request body is missing.");
             }
+            
+            if (!Enum.TryParse<MathOperation>(xOperation, ignoreCase: true, out var operation))
+                return BadRequest("Invalid operation type.");
 
-            decimal result;
-
-
-            result = _mathService.Calculate(body.Number1.Value, body.Number2.Value, xOperation);
-           
+            var result = _mathService.Calculate(body.Number1.Value, body.Number2.Value, operation);
 
             return Ok(new { result });
+
+          
         }
     }
     

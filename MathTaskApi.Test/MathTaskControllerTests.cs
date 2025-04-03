@@ -2,46 +2,51 @@ using MathTaskApi.Controllers;
 using IO.Swagger.Models;
 using Microsoft.AspNetCore.Mvc;
 using Xunit;
-
-public class MathTaskControllerTests
+using MathTaskApi.Service;
+namespace MathTaskApi.Tests
 {
-    private readonly MathTaskController _controller;
-
-    public MathTaskControllerTests()
+    public class MathTaskControllerTests
     {
-        _controller = new MathTaskController(new MathService());
-    }
+        private readonly MathTaskController _controller;
 
-    [Fact]
-    public void Calculate_Addition_ReturnsCorrectResult()
-    {
-        // Arrange
-        var body = new CalculateBody { Number1 = 5, Number2 = 3 };
-        var xOperation = "add";
+        public MathTaskControllerTests()
+        {
+            _controller = new MathTaskController(new MathService());
+        }
 
-        // Act
-        var result = _controller.Calculate(body, xOperation) as OkObjectResult;
+        [Fact]
+        public void Calculate_Addition_ReturnsCorrectResult()
+        {
+            // Arrange
+            var body = new CalculateBody { Number1 = 5, Number2 = 3 };
+            var xOperation = "add";
 
-        // Assert
-        Assert.NotNull(result);
-        var json = result.Value.ToString();
-        Assert.Contains("8", json);
-    }
+            // Act
+            var result = _controller.Calculate(body, xOperation) as OkObjectResult;
 
-    [Fact]
-    public void Calculate_UnsupportedOperation_ReturnsBadRequest()
-    {
-        var body = new CalculateBody { Number1 = 1, Number2 = 2 };
-        var result = _controller.Calculate(body, "invalid") as BadRequestObjectResult;
+            // Assert
+            Assert.NotNull(result);
+            var json = result.Value.ToString();
+            Assert.Contains("8", json);
+        }
 
-        Assert.NotNull(result);
-    }
+        [Fact]
+        public void Calculate_UnsupportedOperation_ReturnsBadRequest()
+        {
+            var body = new CalculateBody { Number1 = 1, Number2 = 2};
+            var xOperation = "invalid";
+            var result = _controller.Calculate(body, "invalid") as BadRequestObjectResult;
 
-    [Fact]
-    public void Calculate_NullBody_ReturnsBadRequest()
-    {
-        var result = _controller.Calculate(null, "add") as BadRequestObjectResult;
+            Assert.Equal(400, result.StatusCode);
+            Assert.Equal("Invalid operation type.", result.Value);
+        }
 
-        Assert.NotNull(result);
+        [Fact]
+        public void Calculate_NullBody_ReturnsBadRequest()
+        {
+            var result = _controller.Calculate(null, "add") as BadRequestObjectResult;
+
+            Assert.NotNull(result);
+        }
     }
 }

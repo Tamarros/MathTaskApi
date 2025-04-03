@@ -1,42 +1,44 @@
 ﻿using MathTaskApi.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Xunit;
-
-public class LoginControllerTests
+namespace MathTaskApi.Tests
 {
-    private readonly LoginController _controller;
-
-    public LoginControllerTests()
+    public class LoginControllerTests
     {
-        _controller = new LoginController();
-    }
+        private readonly LoginController _controller;
 
-    [Fact]
-    public void GenerateToken_ValidCredentials_ReturnsToken()
-    {
-        var request = new LoginRequest
+        public LoginControllerTests()
         {
-            Username = "admin",
-            Password = "1234"
-        };
+            _controller = new LoginController();
+        }
 
-        var result = _controller.GenerateToken(request) as OkObjectResult;
-
-        Assert.NotNull(result);
-        Assert.Contains("token", result.Value.ToString());
-    }
-
-    [Fact]
-    public void GenerateToken_InvalidCredentials_ReturnsUnauthorized()
-    {
-        var request = new LoginRequest
+        [Fact]
+        public void GenerateToken_ValidCredentials_ReturnsToken()
         {
-            Username = "wrong",
-            Password = "wrong"
-        };
+            var request = new LoginRequest
+            {
+                Username = "admin",
+                Password = "1234"
+            };
 
-        var result = _controller.GenerateToken(request);
+            var result = _controller.GenerateToken(request) as OkObjectResult;
 
-        Assert.IsType<UnauthorizedResult>(result);
+            Assert.NotNull(result);
+            Assert.Contains("token", result.Value.ToString());
+        }
+
+        [Fact]
+        public void GenerateToken_InvalidCredentials_ReturnsUnauthorized()
+        {
+            var request = new LoginRequest
+            {
+                Username = "wrong",
+                Password = "wrong"
+            };
+
+            var result = _controller.GenerateToken(request);
+
+            Assert.IsType<UnauthorizedResult>(result);
+        }
     }
 }
